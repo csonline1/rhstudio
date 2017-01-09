@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project>
+	<ant antfile="update_versions.xml"/>
+	<ant antfile="update_versions.xml" dir="../rhstudio.enterprise"/>
+	<ant antfile="update_versions.xml" dir="../rhstudio.enterprise.warcreator"/>
+</project>

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "$SUDO_COMMAND" ]   # Need to run this with sudo 
+then 
+   mntusr=$(id -u) grpusr=$(id -g) sudo $0 $* 
+   exit 0 
+fi 
+
+cd `dirname $0`
+if [ -f skeleton.dmg.gz ]; then rm -f skeleton.dmg.gz; fi
+if [ ! -e /mnt/dmg ] ; then mkdir /mnt/dmg; fi
+dd if=/dev/zero of=skeleton.dmg bs=1024 count=120000
+/sbin/mkfs.hfsplus -v rhstudio skeleton.dmg
+mount -o loop -t hfsplus ./skeleton.dmg /mnt/dmg/
+srcdir=$PWD
+tarfile=$PWD/skeleton-content.tgz
+cd /mnt/dmg
+tar xzf $tarfile
+ln -s /Applications Applications
+cd $srcdir
+umount /mnt/dmg
+gzip skeleton.dmg
+

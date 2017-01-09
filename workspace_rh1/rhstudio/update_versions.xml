@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project>
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+	<property file="../rhstudio/rhstudio.properties"/>
+	
+	<xmltask source="plugin.xml" dest="plugin.xml">		<replace path="/plugin/@version" withText="${version}"/>
+	</xmltask>
+	<xmltask source="rhstudio-studio.product" dest="rhstudio-studio.product">
+		<replace path="/product[@id='rhstudio.studio']/@version" withText="${version}"/>
+	</xmltask>
+	<xmltask source="../rhstudio.feature/feature.xml" dest="../rhstudio.feature/feature.xml">
+		<replace path="/feature/@version" withText="${version}"/>
+	</xmltask>
+	<xmltask source="../rhstudio.updates/site.xml" dest="../rhstudio.updates/site.xml">
+		<replace path="/site/feature/@version" withText="${version}"/>
+		<regexp path="/site/feature/@url" pattern="(.+_).+(\.jar)" replace="$1${version}$2"/>
+	</xmltask>
+
+</project>
